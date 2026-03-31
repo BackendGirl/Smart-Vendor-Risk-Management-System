@@ -8,38 +8,38 @@ use Spatie\Permission\Models\Permission;
 class PermissionController extends Controller
 {
 
-public function index()
-{
-    return Inertia::render('Permissions/Index', [
-        'permissions' => Permission::latest()->get()
-    ]);
-}
+    public function index()
+    {
+        return Inertia::render('Permissions/Index', [
+            'permissions' => Permission::latest()->get()
+        ]);
+    }
 
-public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|unique:permissions,name'
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|unique:permissions,name'
+        ]);
 
-    Permission::create(['name' => $request->name]);
+        Permission::create(['name' => $request->name]);
 
-    return back();
-}
+        return back();
+    }
 
-public function update(Request $request, Permission $permission)
-{
-    $request->validate([
-        'name' => 'required|unique:permissions,name,' . $permission->id
-    ]);
+    public function update(Request $request, Permission $permission)
+    {
+        $request->validate([
+            'name' => 'required|unique:permissions,name,' . $permission->id
+        ]);
 
-    $permission->update(['name' => $request->name]);
+        $permission->update(['name' => $request->name]);
 
-    return back();
-}
+        return back();
+    }
 
-public function destroy(Permission $permission)
-{
-    $permission->delete();
-    return back();
-}
+    public function destroy(Permission $permission)
+    {
+        $permission->delete();
+        return back();
+    }
 }
